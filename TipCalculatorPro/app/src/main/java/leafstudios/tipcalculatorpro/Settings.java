@@ -1,10 +1,8 @@
 package leafstudios.tipcalculatorpro;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +31,7 @@ public class Settings extends AppCompatActivity {
         setButton = (Button) findViewById(R.id.setButton);
         resetButton = (Button) findViewById(R.id.resetButton);
 
-        settings = getPreferences(Context.MODE_PRIVATE);
+        settings = getSharedPreferences("settings", MODE_PRIVATE);
 
         foodSet.setText(settings.getString("foodPart", "0.5"));
         serviceSet.setText(settings.getString("servicePart", "0.3"));

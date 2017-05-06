@@ -220,7 +220,7 @@ public class MainMenu extends AppCompatActivity {
 
     public void readOptions()
     {
-        settings = getPreferences(Context.MODE_PRIVATE);
+        settings = getSharedPreferences("settings", MODE_PRIVATE);
         foodPart = Double.parseDouble(settings.getString("foodPart", ".5"));
         servicePart = Double.parseDouble(settings.getString("servicePart", ".3"));
         otherPart = Double.parseDouble(settings.getString("otherPart", ".2"));
