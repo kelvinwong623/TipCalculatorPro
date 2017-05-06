@@ -25,20 +25,23 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
+        android:textSize="30sp"
         android:id="@+id/totalAmtEdit"
         android:layout_below="@+id/totalAmtText"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/totalAmtText"
+        android:layout_toStartOf="@+id/otherText"
+        android:layout_alignEnd="@+id/totalAmtText" />
 
     <TextView
         android:id="@+id/foodText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:text="Food"
         android:textSize="20dp"
+        android:layout_marginEnd="14dp"
         android:layout_below="@+id/totalAmtEdit"
-        android:layout_toStartOf="@+id/resText"
-        android:layout_marginEnd="14dp" />
+        android:layout_toStartOf="@+id/resText" />
 
     <TextView
         android:id="@+id/serverText"
@@ -46,9 +49,8 @@
         android:layout_height="wrap_content"
         android:text="Service"
         android:textSize="20dp"
-        android:layout_above="@+id/foodSpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@+id/otherText" />
+        android:layout_above="@+id/otherSpinner"
+        android:layout_toEndOf="@+id/textView" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -56,15 +58,16 @@
         android:id="@+id/foodSpinner"
         android:layout_below="@+id/foodText"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/serviceSpinner" />
+        android:layout_toStartOf="@+id/totalAmtText" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/serviceSpinner"
-        android:layout_above="@+id/maxTipText"
-        android:layout_alignStart="@+id/totalAmtText"
-        android:layout_alignEnd="@+id/totalAmtText" />
+        android:layout_alignStart="@+id/totalAmtEdit"
+        android:layout_toStartOf="@+id/settingsButton"
+        android:layout_below="@+id/serverText"
+        android:layout_alignEnd="@+id/totalAmtEdit" />
 
     <TextView
         android:id="@+id/maxTipText"
@@ -74,30 +77,29 @@
         android:textSize="20dp"
         android:layout_below="@+id/foodSpinner"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:layout_marginTop="28dp"
         android:id="@+id/maxTipEdit"
-        android:layout_below="@+id/maxTipText"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/maxTipText" />
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:textSize="30sp"
+        android:layout_toStartOf="@+id/serviceSpinner" />
 
     <Button
         android:id="@+id/calcButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/serverText"
         android:text="Calculate Tip"
         android:textSize="20dp"
         android:onClick="calculateTip"
-        android:layout_below="@+id/maxTipText"
-        android:layout_above="@+id/resText" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/settingsButton"
+        android:layout_alignBottom="@+id/textView" />
 
     <TextView
         android:text="Result Tip Amount"
@@ -105,9 +107,9 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:id="@+id/resText"
+        android:layout_marginTop="21dp"
         android:layout_below="@+id/maxTipEdit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/otherText"
@@ -131,11 +133,10 @@
         android:id="@+id/resTipAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/resText"
-        android:layout_marginTop="10dp"
         android:text="Amount:"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:layout_below="@+id/resText"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/resTipPercentText"
@@ -155,19 +156,48 @@
         android:text="PlaceHold"
         android:textColor="@color/textColor"
         android:textSize="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/resTipPercentText"
+        android:layout_alignBaseline="@+id/resAmount"
+        android:layout_alignBottom="@+id/resAmount"
         android:layout_alignStart="@+id/resTipPercentText" />
 
     <TextView
         android:id="@+id/resAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/resPercent"
-        android:layout_alignBottom="@+id/resPercent"
-        android:layout_alignParentStart="true"
         android:textColor="@color/textColor"
         android:text="Placehold"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:layout_below="@+id/resTipAmountText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="17dp" />
 
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:onClick="goToSettings"
+        android:layout_alignBaseline="@+id/maxTipText"
+        android:layout_alignBottom="@+id/maxTipText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/calcButton" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/resText"
+        android:text="%"
+        android:textSize="40sp"
+        android:layout_toEndOf="@+id/maxTipEdit"
+        android:layout_alignTop="@+id/maxTipEdit" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test"
+        android:text="Button"
+        android:layout_below="@+id/resPercent"
+        android:layout_alignStart="@+id/resPercent" />
 </RelativeLayout>

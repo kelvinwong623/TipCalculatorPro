@@ -2,11 +2,11 @@
     <string name="app_name">TipCalculatorPro</string>
     <string name="MainMenu">Tip Calculator Pro</string>
     <string-array name="ratings">
-        <item>5</item>
-        <item>4</item>
-        <item>3</item>
-        <item>2</item>
-        <item>1</item>
-        <item>0</item>
+        <item>5 Stars</item>
+        <item>4 Stars</item>
+        <item>3 Stars</item>
+        <item>2 Stars</item>
+        <item>1 Star</item>
+        <item>0 Stars</item>
     </string-array>
 </resources>

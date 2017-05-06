@@ -1,6 +1,10 @@
 package leafstudios.tipcalculatorpro;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -11,8 +15,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class MainMenu extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+public class MainMenu extends AppCompatActivity {
+    String optionName = "options.txt";
     Spinner foodRatingSpinner;
     Spinner serviceRatingSpinner;
     Spinner otherRatingSpinner;
@@ -38,6 +50,8 @@ public class MainMenu extends AppCompatActivity {
 
     double resAmt;
     double resPercent;
+
+    SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,20 +92,40 @@ public class MainMenu extends AppCompatActivity {
         foodPart = .5;
         servicePart = .3;
         otherPart = .2;
-
     }
 
     public void calculateTip(View view)
     {
-        Log.d("test", "CALCULATING");
+        readOptions();
+        Log.d("test", Double.toString(foodPart));
+        Log.d("test", Double.toString(servicePart));
+        Log.d("test", Double.toString(otherPart));
+
+        Log.d("test", "Start");
         double ans;
 
         // gather values from user-inputted choices and values
-        totalAmt = Double.parseDouble(totalAmtEdit.getText().toString());
-        maxPercent = Double.parseDouble(maxTipEdit.getText().toString());
-        foodRating = Integer.parseInt(foodRatingSpinner.getSelectedItem().toString());
-        serviceRating = Integer.parseInt(serviceRatingSpinner.getSelectedItem().toString());
-        otherRating = Integer.parseInt(otherRatingSpinner.getSelectedItem().toString());
+        if(totalAmtEdit.getText().toString().isEmpty())
+        {
+            totalAmt = 0.0;
+        } else {
+            totalAmt = Double.parseDouble(totalAmtEdit.getText().toString());
+        }
+        Log.d("test", "totalAmtEdit");
+        if(maxTipEdit.getText().toString().isEmpty())
+        {
+            maxPercent = 0.0;
+        }
+        else
+        {
+            maxPercent = Double.parseDouble(maxTipEdit.getText().toString());
+        }
+        Log.d("test", "maxTipEdit");
+
+        foodRating = Integer.parseInt(foodRatingSpinner.getSelectedItem().toString().substring(0,1));
+        serviceRating = Integer.parseInt(serviceRatingSpinner.getSelectedItem().toString().substring(0,1));
+        otherRating = Integer.parseInt(otherRatingSpinner.getSelectedItem().toString().substring(0,1));
+        Log.d("test", "Gathered");
 
         //calculate food part
         double food = 0;
@@ -115,6 +149,7 @@ public class MainMenu extends AppCompatActivity {
                 food = maxPercent * (foodPart);
                 break;
         }
+
         //calculate service part
         double service = 0;
         switch(serviceRating)
@@ -161,25 +196,49 @@ public class MainMenu extends AppCompatActivity {
                 other = maxPercent * (otherPart);
                 break;
         }
+
+        Log.d("test", "All calculated");
+
         //figure out percentage of the max tip
-        Log.d("test", "food: " + food);
-        Log.d("test", "service: " + service);
-        Log.d("test", "other: " + other);
         double givenPercent = food + service + other;
         ans = totalAmt * givenPercent;
         resAmt = ans;
         resPercent = ans / totalAmt;
-        Log.d("test", "COMPLETED");
+        Log.d("test", "All figured out");
         updateResults();
     }
 
     public void updateResults()
     {
-        Log.d("test", "UPDATING RESULTS");
         DecimalFormat df = new DecimalFormat("#.00");
         String a = "$" + df.format(resAmt);
         resAmountText.setText(a);
         String b = df.format(resPercent * 100) + "%";
         resPercentText.setText(b);
+        Log.d("test", "Results Updated");
+    }
+
+    public void readOptions()
+    {
+        settings = getPreferences(Context.MODE_PRIVATE);
+        foodPart = Double.parseDouble(settings.getString("foodPart", ".5"));
+        servicePart = Double.parseDouble(settings.getString("servicePart", ".3"));
+        otherPart = Double.parseDouble(settings.getString("otherPart", ".2"));
+    }
+
+
+    public void goToSettings(View view)
+    {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
+
+    public void test(View view)
+    {
+        SharedPreferences.Editor edit = settings.edit();
+        edit.putString("foodPart", ".05");
+        edit.putString("servicePart", ".05");
+        edit.putString("otherPart", ".9");
+        edit.commit();
     }
 }
